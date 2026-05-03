@@ -3,11 +3,14 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 ;; Tell emacs where is your personal elisp lib dir
-;; (server-start)				;starting emacs server in oreder to connect to it if it is allready opend
-(require 'package) 
+(server-start)				; open files in existing instance via emacsclient
+(require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
 			 ("gnu" . "https://elpa.gnu.org/packages/")))
+
+;; Initialize packages from local disk - no network connection
+(package-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
@@ -20,9 +23,9 @@
 ;; Web mode configuration - currently disabled
 ;; (require 'init-web-mode)
 
-(unless package-archive-contents
-  (package-refresh-contents))
+;; Only hit network if use-package itself is missing (one-time setup)
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
 
 
