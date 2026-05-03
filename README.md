@@ -45,11 +45,21 @@ Config starts an Emacs server on launch. Use `emacsclient` instead of `emacs` to
 **Shell setup** — add to `~/.bashrc` or `~/.zshrc`:
 
 ```bash
-export EDITOR="emacsclient -n"
-export VISUAL="emacsclient -n"
-alias e="emacsclient -n"        # open file, return to terminal immediately
-alias ec="emacsclient -c"       # open file in new frame
+export EDITOR="emacsclient -n -a emacs"
+export VISUAL="emacsclient -n -a emacs"
+alias e="emacsclient -n -a emacs"   # open file, return to terminal immediately
+alias ec="emacsclient -c -a emacs"  # open file in new frame
 ```
+
+The `-a emacs` flag starts a fresh Emacs if no server is running yet.
+
+**Optional: run Emacs as background daemon** (always ready, faster client connect):
+
+```bash
+emacs --daemon
+```
+
+Add to your desktop autostart to launch on login.
 
 **File manager / desktop** — create `~/.local/share/applications/emacsclient.desktop`:
 
@@ -66,9 +76,11 @@ StartupWMClass=Emacs
 MimeType=text/plain;text/x-c;text/x-c++;text/x-python;text/x-tex;
 ```
 
-Set as default: `xdg-mime default emacsclient.desktop text/plain`
+Set as default via file manager (right-click file → Open With → Set as Default) or:
 
-The `-a emacs` flag starts a fresh Emacs if no server is running yet.
+```bash
+xdg-mime default emacsclient.desktop text/plain
+```
 
 ## Key bindings
 
